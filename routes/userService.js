@@ -1,47 +1,6 @@
 var User = require('../models/userModel');
 
-class UserService {
-	
-	//Mock data
-	/*
-	var userData = [
-		{
-			_id:1,
-			username: "DAC",
-			fullName: "David Collins",
-			isAdmin: true,
-			password: "**********"
-		},
-		{
-			_id:2,
-			username: "P-Dawg",
-			fullName: "Pearly Ezzio",
-			isAdmin: false,
-			password: "**********"
-		},
-		{
-			_id:3,
-			username: "Sparky",
-			fullName: "Sparky the Dog",
-			isAdmin: false,
-			password: "**********"
-		},
-		{
-			_id:4,
-			username: "Jonnyboy",
-			fullName: "John Smith",
-			isAdmin: false,
-			password: "**********"
-		},
-		{
-			_id:5,
-			username: "SquirrelHunter",
-			fullName: "Ben Gleason",
-			isAdmin: false,
-			password: "**********"
-		}
-	];*/
-	
+class UserService {	
 	
 	static setUsers(users) {
 		users.forEach((user) => {
@@ -51,7 +10,7 @@ class UserService {
 	}
 	
     //Get all
-    static getAllUsers(){ 
+    static getAllUsers(){
          return User.find({})
         .then((users)=>{
             return users;
@@ -104,6 +63,17 @@ class UserService {
             //we didn't find a user to update
             if (!foundUser) throw newUserError("User " + username + " wasn't found", 404);
             foundUser.remove()
+            return;
+        });
+    }
+	
+	//delete all
+	static deleteAll() {
+		return User.find({})
+        .then((users)=>{
+			users.forEach((user)=>{
+				user.remove();
+			});
             return;
         });
     }
